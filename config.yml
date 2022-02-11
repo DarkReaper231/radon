@@ -1,0 +1,123 @@
+# Input
+input: "darkhack-5.1.jar"
+
+# Output
+output: "darkhack-5.1-obf.jar"
+
+# Classpath to build class hierarchy from
+# Note: if you're on Java 9 or higher, the Java API classes are located in the "jmod" files
+libraries:
+  - "/usr/lib/jvm/java-17-openjdk-amd64/jmods/java.base.jmod"
+  - "/usr/lib/jvm/java-17-openjdk-amd64/jmods/java.desktop.jmod"
+  - "/home/ruda0/.minecraft/libraries/"
+  - "/home/ruda0/.gradle/caches/fabric-loom/1.18.1/"
+  - "/home/ruda0/.gradle/caches/fabric-loom/temp/"
+
+# Shrink the jar size
+shrinker:
+  # Remove InnerClass attributes
+  remove_inner_classes: true
+
+  # Remove line numbers from stacktraces
+  remove_line_numbers: true
+
+  # Remove class/method/field signatures
+  remove_signature: true
+
+  # Remove local variable information
+  remove_local_variables: true
+
+  # Removes OuterClass and OuterMethod attributes
+  remove_outer_method: true
+
+  # Remove SourceDebug attributes
+  remove_source_debug: true
+
+  # Remove SourceFile attributes
+  remove_source_file: true
+
+  # Remove ACC_SYNTHETIC (0x1000) and ACC_BRIDGE (0x0040) access flags
+  remove_synthetic: true
+
+  # Remove unknown attributes
+  remove_unknown_attributes: true
+
+# Optimize the bytecode
+optimizer:
+  # Inline GOTO->GOTO sequences
+  inline_goto_goto: true
+
+  # Inline GOTO->(RETURN/IRETURN/LRETURN/FRETURN/DRETURN/ARETURN) sequences
+  inline_goto_return: true
+
+  # Remove nops
+  remove_nops: true
+
+# Obfuscates the names of classes/methods/fields
+renamer:
+  # Update these regex-matched resources with updated names
+  adapt_these_resources:
+    - "fabric.mod.json"
+
+  # Repackage all of the renamed classes to this name ("" = default directory)
+  repackage_name: ""
+
+# Encrypt string constants
+string_encryption:
+  # Compute decryption keys based on the context of the decryption call
+  # Note: slows down runtime
+  check_context: true
+
+  # Pool strings into field
+  pool_strings: true
+
+# Scramble numerical constants
+number_obfuscation:
+  # Allow Radon to tamper with integers
+  integer_tampering: true
+
+  # Allow Radon to tamper with longs
+  long_tampering: true
+
+  # Use bitwise (&, |, ^, <<, >>, >>>) operations to obscure (integers and longs only)
+  bitwise_operations: true
+
+  # Use arithmetic (+, -, *, /, %) operations to obscure
+  arithmetic_operations: true
+
+# Randomize the order of fields and methods
+member_shuffler:
+  # Randomize the order of fields
+  shuffle_fields: true
+
+  # Randomize the order of methods
+  shuffle_methods: true
+
+# Level of compression to use on the output JAR
+compression_level: 9
+
+# Name generation dictionary to use (custom)
+dictionary: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+# Initial string length for randomly generated strings
+randomized_string_length: 1
+
+# Exclusions to mask certain classes or their members from being tampered with
+exclusions:
+  # Exclude library classes which match the regex pattern "org/objectweb/asm.*" from being obfuscated
+  - "renamer: org/bleachhack/command/commands/*.*"
+  - "renamer: org/bleachhack/module/mods/*.*"
+  - "renamer: org/bleachhack/mixin/*.*"
+  - "renamer: org/bleachhack/gui/window/widget/WindowWidget.*"
+  - "renamer: org/bleachhack/command/Command.*"
+  - "renamer: org/bleachhack/gui/clickgui/window/ClickGuiWindow.*"
+  - "renamer: org/bleachhack/module/Module.*"
+  - "renamer: org/bleachhack/util/InventoryUtils.*"
+  - "renamer: org/bleachhack/util/NotebotUtils.*"
+  - "renamer: org/bleachhack/util/operation/Operation.*"
+  - "renamer: org/bleachhack/util/render/WorldRenderer.*"
+  - "renamer: org/bleachhack/util/shader/ShaderEffectWrapper.*"
+  - "renamer: org/bleachhack/util/world/DamageUtils.*"
+  - "renamer: org/bleachhack/util/world/ProjectileSimulator.*"
+  - "renamer: org/bleachhack/util/world/WorldUtils.*"
+
